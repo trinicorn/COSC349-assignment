@@ -31,3 +31,42 @@
       $sql = "SELECT * FROM goals";
       $result = mysqli_query($link, $sql) or die(mysqli_error($link));
       print("<h2>Incomplete Goals</h2>");
+
+      //Incomplete Goals
+      while($row = mysqli_fetch_array($result)){
+        if($row['goal_complete'] == 0){
+            if($row['goal_category'] == 0){
+              $cat = "Personal";
+            } elseif ($row['goal_category' == 1]) {
+              $cat = "Professional";
+            } else {
+              $cat = "Other";
+            }
+            echo "<div class='goal'>";
+            echo "<a href='complete.php?id=" . $row['goal_id'] . "'><button class='btnComplete'>Complete</button></a><strong>";
+            echo  $cat . "</strong><p>" . $row['goal_text'] . "</p>Goal Date: " . $row['goal_date'];
+            echo "</div>";
+          }
+      }
+      //Complete Goals
+      print("<h2>Complete Goals</h2>");
+      $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+      while($row = mysqli_fetch_array($result)){
+        if($row['goal_complete'] != 0){
+            if($row['goal_category'] == 0){
+              $cat = "Personal";
+            } elseif ($row['goal_category' == 1]) {
+              $cat = "Professional";
+            } else {
+              $cat = "Other";
+            }
+            echo "<div class='goal'>";
+            echo "<a href='delete.php?id=" . $row['goal_id'] . "'><button class='btnDelete'>Delete</button></a><strong>";
+            echo  $cat . "</strong><p>" . $row['goal_text'] . "</p>Goal Date: " . $row['goal_date'];
+            echo "</div>";
+          }
+      }
+     ?>
+    </div>
+  </body>
+</html>
